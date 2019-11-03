@@ -1,5 +1,5 @@
 chrome.runtime.onInstalled.addListener(function() {
-    chrome.storage.sync.set({username: 'admin'}, function() {
+    chrome.storage.sync.set({greeting: 'yo'}, function() {
       console.log('The username is hello');
     });
     chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
