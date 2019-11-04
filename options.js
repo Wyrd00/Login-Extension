@@ -10,10 +10,8 @@ function handleSubmit() {
       return;
     }
     chrome.storage.sync.set({'username': userName, 'password': password}, function() {
-      console.log('Credentials saved')
-      getCredentials()
-      alert('Credentials saved')
-    })
+      console.log('storage success -- add something to options html page to confirm');
+    });
   });
 };
 
