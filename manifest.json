@@ -29,5 +29,21 @@
       "48": "images/get_started48.png",
       "128": "images/get_started128.png"
     },
+        "commands": {
+          "toggle-login": {
+            "suggested_key": {
+              "default": "Ctrl+Shift+Y",
+              "mac": "Command+Shift+Y"
+            },
+            "description": "Toggle the login"
+          },
+          "_execute_page_action": {
+            "suggested_key": {
+              "default": "Ctrl+Shift+E"
+              // "windows": "Alt+Shift+P",
+              // "mac": "Alt+Shift+P"
+            }
+          }
+        },
     "manifest_version": 2
 }

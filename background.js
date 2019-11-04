@@ -14,6 +14,10 @@ chrome.runtime.onInstalled.addListener(function() {
     });
   });
 
+  chrome.commands.onCommand.addListener(function(command) {
+    console.log('Command:', command);
+  });
+
 //   chrome.runtime.onMessage.addListener((msg, sender, response) => {
 //     switch (msg.type) {
 //         case 'login':
