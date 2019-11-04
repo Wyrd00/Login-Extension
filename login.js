@@ -16,12 +16,12 @@ async function login(loginFormData) {
     try {
         makeRequest('/api/login', 'POST', loginFormData)
             .then((posts) => {
-                console.log('success', posts)
-                // window.location.href = window.location.href;
+                console.log('success', posts);
+                chrome.runtime.sendMessage({type: 'login'});
             })
             .catch((err) => {
                 console.log('err...', err)
-            })
+            });
     //   let response = await fetch('/api/login', loginFormData);
     //   alert(response);
     //   if (response.data.status === "1") {

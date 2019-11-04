@@ -28,13 +28,15 @@ chrome.commands.onCommand.addListener(function (command) {
   }
 });
 
-//   chrome.runtime.onMessage.addListener((msg, sender, response) => {
-//     switch (msg.type) {
-//         case 'login':
-//             response(tabStorage[msg.tabId]);
-//             break;
-//         default:
-//             response('unknown request');
-//             break;
-//     }
-// });
+  chrome.runtime.onMessage.addListener((message, sender, response) => {
+    switch (message.type) {
+        case 'login':
+            chrome.tabs.reload(function () {
+              console.log('Set icon for new login type here');
+            });
+            break;
+        default:
+            console.log('unknown request');
+            break;
+    }
+});
