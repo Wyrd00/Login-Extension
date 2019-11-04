@@ -1,10 +1,13 @@
 //  Login.js 
 
+
 function getCredentials() {
     console.log('getcred')
 
-    chrome.storage.sync.get(['username', 'password'], function (c) {
-        const loginFormData = populateFormDataLogin(c);
+    chrome.storage.sync.get(['credentials'], function (c) {
+        console.log(c)
+        let first_credential = c.credentials[0]
+        const loginFormData = populateFormDataLogin(first_credential);
         login(loginFormData);
     });
 }
@@ -44,7 +47,7 @@ function makeRequest (url, method, loginFormData) {
                 })
             }
         }
-		request.open(method, url);
+		request.open(method, url, true);
 		request.send(loginFormData);
     })
 }
