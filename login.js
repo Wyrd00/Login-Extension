@@ -3,11 +3,14 @@
 // might need to use jquery style get -- seems like content scripts not able to access
 // apis directly other than the limited one -- might need to address. 
 
+
 function getCredentials() {
     console.log('getcred')
 
-    chrome.storage.sync.get(['username', 'password'], function (c) {
-        const loginFormData = populateFormDataLogin(c);
+    chrome.storage.sync.get(['credentials'], function (c) {
+        console.log(c)
+        let first_credential = c.credentials[0]
+        const loginFormData = populateFormDataLogin(first_credential);
         login(loginFormData);
     });
 }
@@ -47,7 +50,7 @@ function makeRequest (url, method, loginFormData) {
                 })
             }
         }
-		request.open(method, url);
+		request.open(method, url, true);
 		request.send(loginFormData);
     })
 }
@@ -61,7 +64,7 @@ function populateFormDataLogin(c) {
     bodyFormData.set("jsfinished", 1);
     bodyFormData.set("gdprOptIn", 1);
     // unable to get csrfToken :( ...investigate
-    bodyFormData.set("csrfToken", 'eef1a84591f53eb31dd0fd78062cfcd9d6552b1590b8f1021217c27da2de88a8');
+    bodyFormData.set("csrfToken", 'c490b300d7ba0d63179a3811a25ea451cb08c01de573b9a794b494556196a5ca');
     return bodyFormData;
 }
 
