@@ -19,8 +19,8 @@
     },
     "content_scripts": [
       {
-        "matches": ["http://education.com/*", "https://education.com/*"],
-        "js": ["login.js"],
+        "matches": ["<all_urls>"],
+        "js": ["login.js"]
       }
     ],
     "icons": {

@@ -11,36 +11,40 @@ function loginUsingStorage () {
   console.log('inside popup.js');
 
   chrome.storage.sync.get(['username', 'password'], function (c) {
-    const loginFormData = populateFormDataLogin(c);
-    login(loginFormData);
+    // const loginFormData = populateFormDataLogin(c);
+    console.log(c)
+    // login(loginFormData);
   });
 }
 
 // might need to add in headers
-async function login(loginFormData) {
+function login(loginFormData) {
+  console.log(loginFormData)
   try {
     let response = $.post('/api/login', loginFormData, {headers: {'Content-Type': 'multipart/form-data'}});
-    console.log(response);
+    alert(response);
     if (response.data.status === "1") {
         window.location.href = window.location.href;
       }
   }
   catch {
-    console.log('something unexpected happened')
+    alert('something unexpected happened')
   }
 }
 
-function populateFormDataLogin(c) {
-  const bodyFormData = new FormData();
-  bodyFormData.set("username", c.username);
-  bodyFormData.set("password", c.password);
-  bodyFormData.set("remember", 1);
-  bodyFormData.set("__redirect", window.location.href);
-  bodyFormData.set("jsfinished", 1);
-  bodyFormData.set("gdprOptIn", 1);
-  bodyFormData.set("csrfToken", window.Edu.csrfToken);
-  return bodyFormData;
-}
+// function populateFormDataLogin(c) {
+//   console.log(c)
+//   let bodyFormData = new FormData();
+//   bodyFormData.set("username", c.username);
+//   bodyFormData.set("password", c.password);
+//   bodyFormData.set("remember", 1);
+//   bodyFormData.set("__redirect", window.location.href);
+//   bodyFormData.set("jsfinished", 1);
+//   bodyFormData.set("gdprOptIn", 1);
+//   // bodyFormData.set("csrfToken", window.Edu.csrfToken);
+//   console.log(window.location.href)
+//   return bodyFormData;
+// }
 
 setEventListeners();
 

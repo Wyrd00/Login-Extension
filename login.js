@@ -2,4 +2,67 @@
 // Could use this file to run as a content-script, which injects js into the page
 // might need to use jquery style get -- seems like content scripts not able to access
 // apis directly other than the limited one -- might need to address. 
-console.log('inside the content script login.js');
+
+function getCredentials() {
+    console.log('getcred')
+
+    chrome.storage.sync.get(['username', 'password'], function (c) {
+        const loginFormData = populateFormDataLogin(c);
+        login(loginFormData);
+    });
+}
+
+async function login(loginFormData) {
+    try {
+        makeRequest('/api/login', 'POST', loginFormData)
+            .then((posts) => {
+                console.log('success', posts)
+                // window.location.href = window.location.href;
+            })
+            .catch((err) => {
+                console.log('err...', err)
+            })
+    //   let response = await fetch('/api/login', loginFormData);
+    //   alert(response);
+    //   if (response.data.status === "1") {
+    //       window.location.href = window.location.href;
+    //     }
+    }
+    catch (err) {
+      alert(err)
+    }
+  }
+
+function makeRequest (url, method, loginFormData) {
+    var request = new XMLHttpRequest();
+	return new Promise(function (resolve, reject) {
+        request.onreadystatechange = function () {
+            if (request.readyState !== 4) return;
+            if (request.status >= 200) {
+                resolve(request)
+            } else {
+                reject({
+                    status: request.status,
+                    statusText: request.statusText
+                })
+            }
+        }
+		request.open(method, url);
+		request.send(loginFormData);
+    })
+}
+
+function populateFormDataLogin(c) {
+    let bodyFormData = new FormData();
+    bodyFormData.set("username", c.username);
+    bodyFormData.set("password", c.password);
+    bodyFormData.set("remember", 1);
+    bodyFormData.set("__redirect", window.location.href);
+    bodyFormData.set("jsfinished", 1);
+    bodyFormData.set("gdprOptIn", 1);
+    // unable to get csrfToken :( ...investigate
+    bodyFormData.set("csrfToken", 'af063d5d467d4a2cb32c89ce50a24708f43e66e302302fc8f43d48dda1cb5806');
+    return bodyFormData;
+}
+
+getCredentials()
