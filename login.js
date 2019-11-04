@@ -1,7 +1,4 @@
 //  Login.js 
-// Could use this file to run as a content-script, which injects js into the page
-// might need to use jquery style get -- seems like content scripts not able to access
-// apis directly other than the limited one -- might need to address. 
 
 function getCredentials() {
     console.log('getcred')
@@ -53,6 +50,7 @@ function makeRequest (url, method, loginFormData) {
 }
 
 function populateFormDataLogin(c) {
+    csrfInput = document.getElementById('extension-csrf');
     let bodyFormData = new FormData();
     bodyFormData.set("username", c.username);
     bodyFormData.set("password", c.password);
@@ -60,8 +58,7 @@ function populateFormDataLogin(c) {
     bodyFormData.set("__redirect", window.location.href);
     bodyFormData.set("jsfinished", 1);
     bodyFormData.set("gdprOptIn", 1);
-    // unable to get csrfToken :( ...investigate
-    bodyFormData.set("csrfToken", 'eef1a84591f53eb31dd0fd78062cfcd9d6552b1590b8f1021217c27da2de88a8');
+    bodyFormData.set("csrfToken", csrfInput.value);
     return bodyFormData;
 }
 
