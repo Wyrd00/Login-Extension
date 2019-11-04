@@ -61,7 +61,7 @@ function populateFormDataLogin(c) {
     bodyFormData.set("jsfinished", 1);
     bodyFormData.set("gdprOptIn", 1);
     // unable to get csrfToken :( ...investigate
-    bodyFormData.set("csrfToken", 'af063d5d467d4a2cb32c89ce50a24708f43e66e302302fc8f43d48dda1cb5806');
+    bodyFormData.set("csrfToken", 'eef1a84591f53eb31dd0fd78062cfcd9d6552b1590b8f1021217c27da2de88a8');
     return bodyFormData;
 }
 
