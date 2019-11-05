@@ -2,7 +2,7 @@
     "name": "Login Extension",
     "version": "1.0",
     "description": "Login extension prototype",
-    "permissions": ["activeTab", "declarativeContent", "storage"],
+    "permissions": ["activeTab", "declarativeContent", "storage", "tabs"],
     "background": {
         "scripts": ["./src/background.js"],
         "persistent": false
@@ -37,11 +37,17 @@
             },
             "description": "Toggle the login"
           },
+          "toggle-logout": {
+            "suggested_key": {
+              "default": "Ctrl+Shift+L",
+              "mac": "Command+Shift+L"
+            },
+            "description": "Toggle logout"
+          },
           "_execute_page_action": {
             "suggested_key": {
               "default": "Ctrl+Shift+E"
               // "windows": "Alt+Shift+P",
-              // "mac": "Alt+Shift+P"
             }
           }
         },
