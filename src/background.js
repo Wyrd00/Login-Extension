@@ -1,6 +1,6 @@
 chrome.runtime.onInstalled.addListener(function () {
   chrome.storage.sync.set({
-    credentials: []
+    credentials: {basic: {}, premium: {}, admin: {}}
   }, function () {
     console.log('why hello there!');
   });
