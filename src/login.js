@@ -48,7 +48,7 @@ function makeRequest(url, method, loginFormData) {
 }
 
 function populateFormDataLogin(c) {
-    csrfInput = document.getElementById('extension-csrf');
+    const csrfInput = document.getElementById('extension-csrf');
     let bodyFormData = new FormData();
     bodyFormData.set("username", c.username);
     bodyFormData.set("password", c.password);
@@ -61,7 +61,7 @@ function populateFormDataLogin(c) {
 }
 
 chrome.runtime.onMessage.addListener(
-    function(message, sender, sendResponse) {
+    function(message, _, sendResponse) {
         switch(message.type) {
             case "loginAttempt":
                 attemptLoginFromCredential(message.data);

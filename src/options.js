@@ -15,16 +15,18 @@ function getCredentialsFromForm(e) {
     e.preventDefault();
     let userName = $('input[name="username"]').val();
     let password = $('input[name="password"]').val();
-    if (!userName || !password) {
+    let acctType = $('select[name="acctType"]').val();
+    if (!userName || !password || !acctType) {
       throw 'missing username or password';
     }
-    return {'username': userName, 'password': password};
+    return {'acctType': acctType, 'username': userName, 'password': password};
 };
 
 function saveStorageCredentials(cred) {
+    let { acctType, username, password } = cred;
     chrome.storage.sync.get('credentials', function(c) {
       const syncedCredentials = c.credentials;
-      syncedCredentials.push(cred);
+      syncedCredentials[acctType][username] = {'password': password};
       chrome.storage.sync.set({'credentials': syncedCredentials}, function() {
         console.log('Credentials saved');
       });

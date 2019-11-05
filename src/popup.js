@@ -10,20 +10,25 @@ function loginMessageWithCredential(cred) {
 
 function populateCredentials() {
   chrome.storage.sync.get(['credentials'], function (syncedCredentials) {
-    console.log(syncedCredentials);
     let cred_list = $('#credential-list');
-    for (let credential of syncedCredentials.credentials) {
-      let li = document.createElement("li");
-      li.append(document.createTextNode(credential.username));
-      let button = document.createElement("button");
-      // AMY: Added this here so that each button calls login with its own credential
-      button.onclick = function () {
-        loginMessageWithCredential(credential);
-      };
-      button.setAttribute('class', 'login-btn');
-      button.innerHTML = "login";
-      li.append(button);
-      cred_list.append(li);
+    const acctType_array = Object.entries(syncedCredentials.credentials)
+    for (let acct of acctType_array) {
+      let ul = document.createElement("ul");
+      ul.append(document.createTextNode(acct[0]));
+      for (let cred of Object.entries(acct[1])) {
+        let li = document.createElement("li");
+        li.append(document.createTextNode(cred[0]));
+        let button = document.createElement("button");
+        $(button).on('click', function () {
+          let credential = {'username': cred[0], 'password': cred[1]['password'] }
+          loginMessageWithCredential(credential);
+        });
+        button.setAttribute('class', 'login-btn');
+        button.innerHTML = "login";
+        li.append(button);
+        ul.append(li)
+      }
+      cred_list.append(ul);
     }
   })
 }
