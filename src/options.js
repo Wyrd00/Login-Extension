@@ -19,14 +19,14 @@ function getCredentialsFromForm(e) {
     if (!userName || !password || !acctType) {
       throw 'missing username or password';
     }
-    return `{${acctType}: {'username': ${userName}, 'password': ${password}}}`;
+    return {'acctType': acctType, 'username': userName, 'password': password};
 };
 
 function saveStorageCredentials(cred) {
-    console.log(cred)
+    let { acctType, username, password } = cred;
     chrome.storage.sync.get('credentials', function(c) {
       const syncedCredentials = c.credentials;
-      const syncedAcctType = `{${syncedCredentials}, ${cred}}`
+      syncedCredentials[acctType][username] = password
       chrome.storage.sync.set({'credentials': syncedCredentials}, function() {
         console.log('Credentials saved');
       });
@@ -39,5 +39,5 @@ function getStorageCredentials() {
   })
 }
 
-$(document).on('DOMContentLoaded', getStorageCredentials);
+// $(document).on('DOMContentLoaded', getStorageCredentials);
 setListeners();

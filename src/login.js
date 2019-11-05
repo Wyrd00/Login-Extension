@@ -3,6 +3,7 @@
 function attemptLoginFromCredential(cred) {
     try {
         // const cred = getFirstCredential();
+        alert(cred)
         const loginFormData = populateFormDataLogin(cred);
         login(loginFormData);
     }
@@ -48,7 +49,8 @@ function makeRequest(url, method, loginFormData) {
 }
 
 function populateFormDataLogin(c) {
-    csrfInput = document.getElementById('extension-csrf');
+    const csrfInput = document.getElementById('extension-csrf');
+    console.log(csrfInput)
     let bodyFormData = new FormData();
     bodyFormData.set("username", c.username);
     bodyFormData.set("password", c.password);
@@ -56,12 +58,13 @@ function populateFormDataLogin(c) {
     bodyFormData.set("__redirect", window.location.href);
     bodyFormData.set("jsfinished", 1);
     bodyFormData.set("gdprOptIn", 1);
-    bodyFormData.set("csrfToken", csrfInput.value);
+    bodyFormData.set("csrfToken", '24869e784afa332984dc42511a58e8b17539963bc54fdd5316a5fed0802ade35');
+    // bodyFormData.set("csrfToken", csrfInput.value);
     return bodyFormData;
 }
 
 chrome.runtime.onMessage.addListener(
-    function(message, sender, sendResponse) {
+    function(message, _sender, sendResponse) {
         switch(message.type) {
             case "loginAttempt":
                 attemptLoginFromCredential(message.data);
