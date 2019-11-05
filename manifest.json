@@ -4,7 +4,7 @@
     "description": "Login extension prototype",
     "permissions": ["activeTab", "declarativeContent", "storage"],
     "background": {
-        "scripts": ["background.js"],
+        "scripts": ["./src/background.js"],
         "persistent": false
       },
     "options_page": "options.html",
