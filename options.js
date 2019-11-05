@@ -1,33 +1,34 @@
-function handleSubmit() {
-  let credentialsForm = $('#credentials-form');
-
+function setListeners() {
+  const credentialsForm = $('#credentials-form');
   credentialsForm.on('submit', function (e) {
+    try {
+      const cred = getCredentialsFromForm(e);
+      saveStorageCredentials(cred);
+    }
+    catch (err){
+      console.log("Error: ", err);
+    }
+  });
+}
+
+function getCredentialsFromForm(e) {
     e.preventDefault();
     let userName = $('input[name="username"]').val();
     let password = $('input[name="password"]').val();
     if (!userName || !password) {
-      alert('Missing username or password');
-      return;
+      throw 'missing username or password';
     }
-    const new_cred = {'username': userName, 'password': password};
-    saveStorageCredentials(new_cred)
-  });
+    return {'username': userName, 'password': password};
 };
 
-function saveStorageCredentials(new_cred) {
-  try {
+function saveStorageCredentials(cred) {
     chrome.storage.sync.get('credentials', function(c) {
-      const list_of_credentials = c.credentials
-      list_of_credentials.push(new_cred)
-      chrome.storage.sync.set({'credentials': list_of_credentials}, function() {
-        console.log('Credentials saved')
-        getStorageCredentials()
-        alert('Credentials saved')
-      })
-    }) 
-  } catch (err) {
-      console.log('err...' + err)
-  }
+      const syncedCredentials = c.credentials;
+      syncedCredentials.push(cred);
+      chrome.storage.sync.set({'credentials': syncedCredentials}, function() {
+        console.log('Credentials saved');
+      });
+    });
 }
 
 function getStorageCredentials() {
@@ -36,5 +37,5 @@ function getStorageCredentials() {
   })
 }
 
-$(document).on('DOMContentLoaded', getStorageCredentials);
-handleSubmit()
+// $(document).on('DOMContentLoaded', getStorageCredentials);
+setListeners();
