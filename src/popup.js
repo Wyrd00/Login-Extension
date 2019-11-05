@@ -16,7 +16,6 @@ function populateCredentials() {
       let ul = document.createElement("ul");
       ul.append(document.createTextNode(acct[0]));
       for (let cred of Object.entries(acct[1])) {
-        console.log(cred)
         let li = document.createElement("li");
         li.append(document.createTextNode(cred[0]));
         let button = document.createElement("button");
