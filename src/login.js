@@ -1,41 +1,36 @@
 //  Login.js 
 
-
-function getCredentials() {
-    console.log('getcred')
-
-    chrome.storage.sync.get(['credentials'], function (c) {
-        console.log(c)
-        let first_credential = c.credentials[0]
-        const loginFormData = populateFormDataLogin(first_credential);
+function main() {
+    try {
+        const cred = getFirstCredential();
+        const loginFormData = populateFormDataLogin(cred);
         login(loginFormData);
+    }
+    catch (err) {
+        console.log("Error: ", err);
+    }
+}
+
+function getFirstCredential() {
+    console.log('retrieving first credential');
+    let firstCredential;
+    chrome.storage.sync.get(['credentials'], function (c) {
+        console.log(c);
+        firstCredential = c.credentials[0];
     });
+    console.log('first credential is ', firstCredential);
+    return firstCredential;
 }
 
 async function login(loginFormData) {
-    try {
-        makeRequest('/api/login', 'POST', loginFormData)
-            .then((posts) => {
-                console.log('success', posts);
-                chrome.runtime.sendMessage({type: 'login'});
-            })
-            .catch((err) => {
-                console.log('err...', err)
-            });
-    //   let response = await fetch('/api/login', loginFormData);
-    //   alert(response);
-    //   if (response.data.status === "1") {
-    //       window.location.href = window.location.href;
-    //     }
-    }
-    catch (err) {
-      alert(err)
-    }
-  }
+    const response = await makeRequest('/api/login', 'POST', loginFormData);
+    console.log('success', response);
+    chrome.runtime.sendMessage({type: 'login'});
+}
 
-function makeRequest (url, method, loginFormData) {
+function makeRequest(url, method, loginFormData) {
     var request = new XMLHttpRequest();
-	return new Promise(function (resolve, reject) {
+    return new Promise(function (resolve, reject) {
         request.onreadystatechange = function () {
             if (request.readyState !== 4) return;
             if (request.status >= 200) {
@@ -46,9 +41,9 @@ function makeRequest (url, method, loginFormData) {
                     statusText: request.statusText
                 })
             }
-        }
-		request.open(method, url, true);
-		request.send(loginFormData);
+        };
+        request.open(method, url, true);
+        request.send(loginFormData);
     })
 }
 
@@ -65,4 +60,4 @@ function populateFormDataLogin(c) {
     return bodyFormData;
 }
 
-getCredentials()
+main();
