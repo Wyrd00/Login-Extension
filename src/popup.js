@@ -2,7 +2,6 @@
 
 function loginMessageWithCredential(cred) {
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-    console.log(cred)
     chrome.tabs.sendMessage(tabs[0].id, {type:"loginAttempt", data: cred}, function(response){
       console.log('Received response from login attempt -- can do updates to popup with response: ', response);
     });
@@ -14,7 +13,6 @@ function populateCredentials() {
     let cred_list = $('#credential-list');
     const acctType_array = Object.entries(syncedCredentials.credentials)
     for (let acct of acctType_array) {
-      console.log(acct)
       let ul = document.createElement("ul");
       ul.append(document.createTextNode(acct[0]));
       for (let cred of Object.entries(acct[1])) {
@@ -22,9 +20,9 @@ function populateCredentials() {
         let li = document.createElement("li");
         li.append(document.createTextNode(cred[0]));
         let button = document.createElement("button");
-        // AMY: Added this here so that each button calls login with its own credential
         $(button).on('click', function () {
-          loginMessageWithCredential(cred);
+          let credential = {'username': cred[0], 'password': cred[1]['password'] }
+          loginMessageWithCredential(credential);
         });
         button.setAttribute('class', 'login-btn');
         button.innerHTML = "login";

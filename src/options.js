@@ -26,7 +26,7 @@ function saveStorageCredentials(cred) {
     let { acctType, username, password } = cred;
     chrome.storage.sync.get('credentials', function(c) {
       const syncedCredentials = c.credentials;
-      syncedCredentials[acctType][username] = password
+      syncedCredentials[acctType][username] = {'password': password};
       chrome.storage.sync.set({'credentials': syncedCredentials}, function() {
         console.log('Credentials saved');
       });
