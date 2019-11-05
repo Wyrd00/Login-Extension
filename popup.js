@@ -1,15 +1,14 @@
 // popup.js
-// do I need to inject code into browser chrome.tabs.executeScript?
 
 function populateCredentials() {
-  chrome.storage.sync.get(['credentials'], function (credentials) {
-    console.log(credentials)
+  chrome.storage.sync.get(['credentials'], function (syncedCredentials) {
+    console.log(syncedCredentials);
     let cred_list = $('#credential-list')
-    for (credential of credentials.credentials) {
+    for (let credential of syncedCredentials.credentials) {
       let li = document.createElement("li");
       li.append(document.createTextNode(credential.username));
-      let button = document.createElement("button")
-      button.setAttribute('class', 'login-btn')
+      let button = document.createElement("button");
+      button.setAttribute('class', 'login-btn');
       button.innerHTML = "login";
       li.append(button);
       cred_list.append(li)
@@ -28,4 +27,4 @@ function setEventListeners(e) {
 }
 
 $(document).on('DOMContentLoaded', populateCredentials);
-$(document).on('click', '.login-btn', setEventListeners)
+$(document).on('click', '.login-btn', setEventListeners);
