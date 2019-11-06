@@ -1,7 +1,7 @@
 // INITS
 chrome.runtime.onInstalled.addListener(function () {
   chrome.storage.sync.set({
-    credentials: {basic: {}, premium: {}, admin: {}}
+    credentials: {basic: {}, premium: {}, admin: {}, unknown: {}}
   }, function () {
     console.log('why hello there!');
   });
@@ -29,7 +29,7 @@ function loginMessageWithCredential(cred) {
 
 function logoutAndRefresh() {
     chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-        const newUrl = tabs[0].url + "/?__logout";
+        const newUrl = tabs[0].url + "?__logout";
         console.log(newUrl);
         chrome.tabs.update(tabs[0].id, {url: newUrl}, function (tab) {
             console.log('logged out of tab: ', tab);
