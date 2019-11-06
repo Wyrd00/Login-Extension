@@ -67,9 +67,3 @@ chrome.runtime.onMessage.addListener((message, sender, response) => {
             break;
     }
 });
-
-//UPDATE UNKNOWN ACCOUNTS
-chrome.webNavigation.onCompleted.addListener(function(details) {
-    //look to see if account name is in the dom and account name is in unknown, and if so, update it in the storage sync.
-    // chrome.tabs.executeScript(details.tabId,
-});
