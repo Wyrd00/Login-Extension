@@ -10,14 +10,33 @@ function loginMessageWithCredential(cred) {
 
 function populateCredentials() {
   chrome.storage.sync.get(['credentials'], function (syncedCredentials) {
-    let cred_list = $('#credential-list');
     const acctType_array = Object.entries(syncedCredentials.credentials)
+    
     for (let acct of acctType_array) {
-      let ul = document.createElement("ul");
-      ul.append(document.createTextNode(acct[0]));
+      let mainView = $("#main-view");
+      //create plan div
+      let panel = document.createElement('div')
+      let heading = document.createElement('h4')
+      let text = document.createTextNode(acct[0]); 
+      heading.append(text)
+      panel.append(heading)
+      // create table and append to panel
+      const table = document.createElement("table");
+      panel.append(table)
+
+      // helper function        
+      function addCell(tr, text) {
+        let td = tr.insertCell();
+        td.textContent = text;
+        return td;
+      }
+      
       for (let cred of Object.entries(acct[1])) {
-        let li = document.createElement("li");
-        li.append(document.createTextNode(cred[0]));
+        let thead = table.createTHead();
+        let row = thead.insertRow();
+        addCell(row, cred[0]);
+
+        //button
         let button = document.createElement("button");
         $(button).on('click', function () {
           let credential = {'username': cred[0], 'password': cred[1]['password'] }
@@ -25,13 +44,17 @@ function populateCredentials() {
         });
         button.setAttribute('class', 'login-btn');
         button.innerHTML = "login";
-        li.append(button);
-        ul.append(li)
+        let td = row.insertCell();
+        td.append(button)
       }
-      cred_list.append(ul);
+      mainView.append(panel);
     }
   })
 }
+    // let credList = $('.panel');
+    // let panelHeading = $('.panel-heading'); //basic, premium, admin
+    // let panelBody = document.createElement(div)
+
 
 // function setEventListeners(e) {
 //   console.log('setting event listeners in popup');
