@@ -54,8 +54,5 @@ button {
   display: inline-block;
   width: 100%;
   padding: 0.75rem 1.25rem;
+  cursor: default;
 }
-
-/* .card-header {
-  padding:0;
-} */

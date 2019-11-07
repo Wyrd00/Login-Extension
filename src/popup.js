@@ -49,7 +49,7 @@ function populateCredentials() {
         let thead = table.createTHead();
         let row = thead.insertRow();
         addCell(row, cred[0]);
-      
+
         //button
         $('<button/>', {
           type: 'button',
@@ -59,15 +59,15 @@ function populateCredentials() {
             loginMessageWithCredential(credential);
           }
         }).appendTo($('<td></td>').appendTo(row));
+
+        // let button = document.createElement('button');
         // $(button).on('click', function () {
         //   let credential = {'username': cred[0], 'password': cred[1]['password'] }
         //   loginMessageWithCredential(credential);
         // });
         // $(button).attr({'class': 'btn login-btn' });
-        // button.innerHTML = "login";
         // let td = row.insertCell();
-        // $('<td></td>').appendTo(row);
-        // td.appendTo(button);
+        // td.append(button);
       }
       mainView.append(panel);
       collapseNum++;
