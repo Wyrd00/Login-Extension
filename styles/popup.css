@@ -49,6 +49,12 @@ body {
   vertical-align: middle;
   padding-left: 25px;
   font-size: 13px;
+  /* Evan: decide on yay or nay to white-space below*/
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-wrap: break-word;
+  max-width: 180px;
 }
 
 .table .open-tab {
@@ -56,7 +62,9 @@ body {
 }
 
 button {
+  position: relative;
   height: 30px;
-  width: 48px;
+  width: 50px;
   outline: none;
+  left: 40px;
 }
