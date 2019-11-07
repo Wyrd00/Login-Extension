@@ -28,11 +28,12 @@ function loginMessageWithCredential(cred) {
 }
 
 function logoutAndRefresh() {
+
+    console.log('logout and refresh');
+
     chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-        const newUrl = tabs[0].url + "?__logout";
-        console.log(newUrl);
-        chrome.tabs.update(tabs[0].id, {url: newUrl}, function (tab) {
-            console.log('logged out of tab: ', tab);
+        chrome.tabs.sendMessage(tabs[0].id, {type: "logoutAttempt"}, function (response) {
+            console.log('logout boi', response);
         });
     });
 }
