@@ -1,27 +1,23 @@
-.body {
+body {
   font-family: "Helvetica Neue", Helvetica, Arial,sans-serif;
   font-size: 14px;
   line-height: 1.428571429;
   color: #333;
   background-color: #fff;
-  height: 600px;
-  width: 430px;
+  min-width: 360px;
+  max-width: 420px;
   overflow: hidden;
 }
 
-.main-view {
+#main-view {
   padding: 0 20px;
   box-sizing: border-box;
-  height: 490px;
-  /* width: 100%; */
   overflow-y: auto;
   background: #f8f8f8;
 }
 
 .credentials {
   width: 100%;
-  margin-bottom: 20px;
-  /* border-collapse: collapse; */
   max-width: 100%;
 }
 
@@ -33,16 +29,33 @@ button {
   
 #panel {
   border: none;
-  border-left: 3px solid #00abf7;
+  border-left: 3px solid #00c4c9;
   margin: 15px 0;
   box-shadow: 0 1px 1px rgba(0,0,0,0.05);
 }
 
 .panel-heading {
-  padding: 8px 8px 8px 23px;
+  /* padding: 8px 8px 8px 23px; */
+  padding: 0;
   position: relative;
   background: #fff;
   color: #6f6f6f;
   border-bottom: none;
   border-radius: 0;
 }
+
+.table .td-name {
+  padding-left: 20px;
+  font-size: 12px;
+}
+
+.panel-heading > a {
+  color: #464646;
+  display: inline-block;
+  width: 100%;
+  padding: 0.75rem 1.25rem;
+}
+
+/* .card-header {
+  padding:0;
+} */

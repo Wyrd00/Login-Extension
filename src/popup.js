@@ -11,7 +11,8 @@ function loginMessageWithCredential(cred) {
 function populateCredentials() {
   chrome.storage.sync.get(['credentials'], function (syncedCredentials) {
     const acctType_array = Object.entries(syncedCredentials.credentials)
-    
+    let collapseNum = 1;
+
     for (let acct of acctType_array) {
       let mainView = $("#main-view");
       //create plan div
@@ -22,15 +23,15 @@ function populateCredentials() {
       let text = document.createTextNode(acct[0]); 
       panelHeader.append(text)
       let panelLink = document.createElement('a')
-      $(panelLink).attr({'class': 'collapsed card-link', 'data-toggle': "collapse", 'href': "#panelBody"})
+      $(panelLink).attr({'class': 'collapsed card-link', 'data-toggle': "collapse", 'href': "#credBody" + collapseNum})
       panelLink.append(text)
       panelHeader.append(panelLink)
       panel.append(panelHeader)
       // create table and append to panel
       let credBody = document.createElement('div');
-      $(credBody).attr({'id': "panelBody", 'class':'credentials collapse show', 'data-parent': "#main-view"})
+      $(credBody).attr({'id': "credBody" + collapseNum, 'class':'credentials collapse show'})
       const table = document.createElement("table");
-      $(table).attr({'class': 'table table-hover table-sm'});
+      $(table).attr({'class': 'table table-hover'});
       // panelHeader.append(table)
       credBody.append(table);
       panel.append(credBody);
@@ -39,26 +40,37 @@ function populateCredentials() {
       function addCell(tr, text) {
         let td = tr.insertCell();
         td.textContent = text;
+        $(td).attr({'class': 'td-name'})
         return td;
       }
+      
       
       for (let cred of Object.entries(acct[1])) {
         let thead = table.createTHead();
         let row = thead.insertRow();
         addCell(row, cred[0]);
-
+      
         //button
-        let button = document.createElement("button");
-        $(button).on('click', function () {
-          let credential = {'username': cred[0], 'password': cred[1]['password'] }
-          loginMessageWithCredential(credential);
-        });
-        button.setAttribute('class', 'login-btn btn btn-primary');
-        button.innerHTML = "login";
-        let td = row.insertCell();
-        td.append(button)
+        $('<button/>', {
+          type: 'button',
+          class: 'btn login-btn btn-primary',
+          click: function() {
+            let credential = {'username': cred[0], 'password': cred[1]['password'] }
+            loginMessageWithCredential(credential);
+          }
+        }).appendTo($('<td></td>').appendTo(row));
+        // $(button).on('click', function () {
+        //   let credential = {'username': cred[0], 'password': cred[1]['password'] }
+        //   loginMessageWithCredential(credential);
+        // });
+        // $(button).attr({'class': 'btn login-btn' });
+        // button.innerHTML = "login";
+        // let td = row.insertCell();
+        // $('<td></td>').appendTo(row);
+        // td.appendTo(button);
       }
       mainView.append(panel);
+      collapseNum++;
     }
   })
 }
