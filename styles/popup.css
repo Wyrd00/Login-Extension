@@ -1,14 +1,70 @@
-.main-view {
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial,sans-serif;
+  font-size: 14px;
+  line-height: 1.428571429;
+  color: #333;
+  background-color: #fff;
+  min-width: 390px;
+  max-width: 420px;
+  overflow: hidden;
+}
+
+#main-view {
   padding: 0 20px;
   box-sizing: border-box;
-  height: 490px;
   overflow-y: auto;
   background: #f8f8f8;
 }
+  
+#main-view .panel {
+  border: none;
+  border-left: 3px solid #00c4c9;
+  margin: 15px 0;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+}
+
+.panel-heading {
+  /* padding: 8px 8px 8px 23px; */
+  padding: 0;
+  position: relative;
+  background: #fff;
+  color: #6f6f6f;
+  border-bottom: none;
+  border-radius: 0;
+}
+
+.panel-heading > a {
+  color: #464646;
+  display: inline-block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  cursor: default;
+}
+
+.panel-body .table {
+  margin: 0 0;
+}
+
+.table .td-name {
+  vertical-align: middle;
+  padding-left: 25px;
+  font-size: 13px;
+  /* Evan: decide on yay or nay to white-space below*/
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-wrap: break-word;
+  max-width: 180px;
+}
+
+.table .open-tab {
+  vertical-align: baseline;
+}
 
 button {
-    height: 30px;
-    width: 50px;
-    outline: none;
-  }
-  
+  position: relative;
+  height: 30px;
+  width: 50px;
+  outline: none;
+  left: 40px;
+}
