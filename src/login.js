@@ -60,12 +60,21 @@ function populateFormDataLogin(c) {
     return bodyFormData;
 }
 
+function logout() {
+    $('header.reorg .dropdown a.sign-out')[0].click();
+}
+
+
 chrome.runtime.onMessage.addListener(
     function(message, _, sendResponse) {
         switch(message.type) {
-            case "loginAttempt":
+            case 'loginAttempt':
                 attemptLoginFromCredential(message.data);
                 sendResponse('heres a response from login');
+                break;
+            case 'logoutAttempt':
+                logout();
+                sendResponse('logged out ya boi');
                 break;
             default:
                 sendResponse('unknown action type');
