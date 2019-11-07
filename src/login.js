@@ -67,6 +67,7 @@ function logout() {
 
 chrome.runtime.onMessage.addListener(
     function(message, _, sendResponse) {
+        console.log('Message received', message);
         switch(message.type) {
             case 'loginAttempt':
                 attemptLoginFromCredential(message.data);

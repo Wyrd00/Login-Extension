@@ -38,29 +38,30 @@ function logoutAndRefresh() {
     });
 }
 
-function getCredentialByType(type) {
+function getFirstCredentialByType(type) {
     chrome.storage.sync.get(['credentials'], function (c) {
         let syncedCredentials = c.credentials;
-        console.log(syncedCredentials, syncedCredentials[type], Object.keys(syncedCredentials[type])[0]);
 
-        let firstCred = syncedCredentials[type][Object.keys(syncedCredentials[type])[0]];
-        if (firstCred !== undefined) {
-            return firstCred;
+        for (let key of Object.keys(syncedCredentials[type])) {
+            console.log({username: key, password: syncedCredentials[type][key]['password']});
+            loginMessageWithCredential({username: key, password: syncedCredentials[type][key]['password']});
+            return;
         }
-        throw `no credentials found of type ${type}.`
+
+        console.log(`No credential of type ${type}`);
     });
 }
 
 function getBasicCred() {
-    return getCredentialByType('basic');
+    return getFirstCredentialByType('basic');
 }
 
 function getPremiumCred() {
-    return getCredentialByType('premium');
+    return getFirstCredentialByType('premium');
 }
 
 function getAdminCred() {
-    return getCredentialByType('admin');
+    return getFirstCredentialByType('admin');
 }
 
 function switchCommand(command) {
@@ -70,14 +71,13 @@ function switchCommand(command) {
             logoutAndRefresh();
             break;
         case 'toggle-basic':
-            loginMessageWithCredential(getBasicCred());
+            getBasicCred();
             break;
         case 'toggle-premium':
-            let cred = getPremiumCred();
-            loginMessageWithCredential(cred);
+            getPremiumCred();
             break;
         case 'toggle-admin':
-            loginMessageWithCredential(getAdminCred());
+            getAdminCred();
             break;
         default:
             console.log('command not linked to an action yet');
