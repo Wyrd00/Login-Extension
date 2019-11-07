@@ -27,6 +27,8 @@ function getCredentialsFromForm(e) {
 
 function notifyOnStorageSuccess() {
     $('.notify-success').show();
+    $('input[name="username"]').val('');
+    $('input[name="password"]').val('');
 }
 
 function saveStorageCredentials(cred) {
