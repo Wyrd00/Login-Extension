@@ -14,9 +14,13 @@ function populateCredentials() {
     let collapseNum = 1;
 
     for (let acct of acctType_array) {
+      if (acct[0] === 'unknown') {
+        continue;
+      }
+
       let mainView = $("#main-view");
       let panel = $('<div>').addClass('card panel');
-      let panelHeader = $('<div class="panel-heading"><a class="collapsed card-link" data-toggle="collapse" href="#credentials'+collapseNum+'">'+acct[0]+'</a></div></div></div>');
+      let panelHeader = $('<div class=" panel-heading"><a class="collapsed card-link" data-toggle="collapse" href="#credentials'+collapseNum+'">'+acct[0]+'</a></div></div></div>');
       let panelBody = $('<div>').attr({'id': "credentials" + collapseNum, 'class':'panel-body collapse show'});
       let table = $("<table>").addClass('table table-hover');
 
