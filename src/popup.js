@@ -56,7 +56,7 @@ function populateCredentials() {
 
         $('<button/>', {
           type: 'button',
-          class: 'btn-delete' ,
+          class: 'btn btn-delete' ,
           click: function() {
             deleteCredential(row, acct[0], cred[0]);
           }
