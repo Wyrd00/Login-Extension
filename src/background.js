@@ -38,20 +38,60 @@ function logoutAndRefresh() {
     });
 }
 
-// KEYPRESS COMMANDS
-chrome.commands.onCommand.addListener(function (command) {
+function getFirstCredentialByType(type) {
+    chrome.storage.sync.get(['credentials'], function (c) {
+        let syncedCredentials = c.credentials;
+
+        for (let key of Object.keys(syncedCredentials[type])) {
+            console.log({username: key, password: syncedCredentials[type][key]['password']});
+            loginMessageWithCredential({username: key, password: syncedCredentials[type][key]['password']});
+            return;
+        }
+
+        console.log(`No credential of type ${type}`);
+    });
+}
+
+function getBasicCred() {
+    return getFirstCredentialByType('basic');
+}
+
+function getPremiumCred() {
+    return getFirstCredentialByType('premium');
+}
+
+function getAdminCred() {
+    return getFirstCredentialByType('admin');
+}
+
+function switchCommand(command) {
     console.log('Command:', command);
     switch (command) {
-        case 'toggle-login':
-            // TODO: get a credential from sync and pass it through as cred
-            loginMessageWithCredential(cred);
-            break;
         case 'toggle-logout':
             logoutAndRefresh();
+            break;
+        case 'toggle-basic':
+            getBasicCred();
+            break;
+        case 'toggle-premium':
+            getPremiumCred();
+            break;
+        case 'toggle-admin':
+            getAdminCred();
             break;
         default:
             console.log('command not linked to an action yet');
             break;
+    }
+}
+
+// KEYPRESS COMMANDS
+chrome.commands.onCommand.addListener(function (command) {
+    try {
+        switchCommand(command);
+    }
+    catch(err) {
+        console.log(err);
     }
 });
 
