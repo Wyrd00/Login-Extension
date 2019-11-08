@@ -41,7 +41,15 @@ function populateCredentials() {
 
       for (let cred of Object.entries(acct[1])) {
         let row = $('<tr>');
-        row.append('<td class="td-name">'+cred[0]+'</td>');
+        let credential = {'username': cred[0], 'password': cred[1]['password'] };
+        let clickableAccount = $('<td/>', {
+          class: 'td-name',
+          click: function () {
+            loginMessageWithCredential(credential);
+          }
+        });
+        clickableAccount.text(cred[0]);
+        row.append(clickableAccount);
         table.append(row);
 
         //button
@@ -49,7 +57,6 @@ function populateCredentials() {
           type: 'button',
           class: 'btn login-btn',
           click: function() {
-            let credential = {'username': cred[0], 'password': cred[1]['password'] };
             loginMessageWithCredential(credential);
           }
         }).append(loginSvg()).appendTo($('<td></td>').appendTo(row));

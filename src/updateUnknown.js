@@ -1,4 +1,3 @@
-console.log('inside updateUnknown.js');
 const currentUser = $('.user-menu .email-avatar span').text();
 const premiumLabelDisplay = $('.user-menu .premium-label').css('display');
 const adminLinks = $('.admin-links');
