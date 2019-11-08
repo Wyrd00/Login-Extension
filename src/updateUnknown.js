@@ -1,10 +1,19 @@
 console.log('inside updateUnknown.js');
 const currentUser = $('.user-menu .email-avatar span').text();
-const tryPremiumDiv = $('header.reorg .upgrade-link');
+const premiumLabelDisplay = $('.user-menu .premium-label').css('display');
+const adminLinks = $('.admin-links');
 const UNKNOWN = 'unknown';
 let accountType;
 
-tryPremiumDiv.length ? accountType = 'basic' : accountType = 'premium';
+if (adminLinks.length) {
+    accountType = 'admin';
+}
+else if (premiumLabelDisplay !== 'none') {
+    accountType = 'premium';
+}
+else {
+    accountType = 'basic';
+}
 
 console.log(currentUser, accountType);
 chrome.storage.sync.get(['credentials'], function (c) {
