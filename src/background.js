@@ -10,7 +10,7 @@ chrome.runtime.onInstalled.addListener(function () {
       conditions: [
         new chrome.declarativeContent.PageStateMatcher({
           pageUrl: {
-            urlContains: 'education.com'
+            urlContains: 'github.com'
           },
         })
       ],
@@ -22,7 +22,7 @@ chrome.runtime.onInstalled.addListener(function () {
 function loginMessageWithCredential(cred) {
     chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
         chrome.tabs.sendMessage(tabs[0].id, {type: "loginAttempt", data: cred}, function (response) {
-            console.log('Received response from login attempt -- can do updates to popup with response: ', response);
+            console.log('Received response from login attempt -- commence updates to popup.js with response: ', response);
         });
     });
 }
